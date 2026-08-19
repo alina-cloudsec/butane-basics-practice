@@ -1,78 +1,158 @@
-# butane-basics-practice
+# Butane Basics Practice Notes
 My step-by-step practical notes, YAML validation rules, and structural syntax blueprints for Flatcar Container Linux Butane configurations.
-* **Goal:** To understand and write simple Butane YAML files to configure Flatcar OS before it boots.
+**Goal:** To understand and write simple Butane YAML files that
+configure Flatcar OS before it even boots up.
 
 ---
 
-## Strict YAML Rules (To keep your mind fresh and clean)
+## Strict YAML Rules
 
-* **No Tabs:** Never use the Tab key. Always use the Spacebar.
-* **2 Spaces Rule:** Move forward by exactly 2 spaces for every new sub-section.
-* **Small Letters:** Always use lowercase letters for all keys and commands.
-* **Colon Space (`: `):** Always put a space after the colon symbol.
-* **Dash Space (`- `):** Always put a space after a list dash.
-* **Pipe Symbol (`|`):** Use this symbol to write a big block of text on new lines.
+These rules keep a Butane file clean and working correctly.
 
----
-
-## Core Commands and Simple Meanings
-
-### Basic Headers & Internet Fetching
-* `variant:` -> To show this file belongs to this OS (always `flatcar`).
-* `version:` -> To declare the file specification version.
-* `ignition:` -> To fetch settings from the internet or other networks.
-* `config:` -> To avail more options in settings.
-* `merge:` -> To add another online configuration file into this file.
-* `replace:` -> To delete old settings and load a completely new file from a URL.
-
-### Creating Files & Directories
-* `storage:` -> Where files and drives will create.
-* `files:` -> To create a new file list.
-* `path:` -> To give the exact absolute folder destination of your file.
-* `mode:` -> For file permissions to read, write, or execute.
-* `overwrite:` -> To overwrite or delete an existing file at that path.
-* `contents:` -> To write text or data inside your file.
-* `inline:` -> To write short text directly inside the configuration file.
-* `directories:` -> To create a new blank folder.
-* `links:` -> To create a desktop shortcut (symlink) to another file.
-
-### Setting Up Users & Security
-* `passwd:` -> Main block to create and manage system user accounts.
-* `users:` -> The list of new accounts you want to create.
-* `name:` -> To set the login username (Flatcar's default admin user is `core`).
-* `ssh_authorized_keys:` -> To paste your computer's SSH public key for secure login without a password.
+- **No tabs.** Always use the space bar, never the Tab key.
+- **Two space rule.** Move forward exactly two spaces for every new
+  sub section.
+- **Small letters.** Always use lowercase letters for keys and
+  commands.
+- **Colon space.** Always put a space after a colon symbol.
+- **Dash space.** Always put a space after a list dash.
+- **Pipe symbol.** Use `|` to write a big block of text across
+  multiple lines.
 
 ---
 
-## Automation & Background Services (`systemd:`) - Detailed Explanation
+## Core Commands and What They Mean
 
-When you want your Flatcar node to run security scripts, capacity guards, or log scanners automatically in the background right after the system turns on, you use the `systemd:` block. Here is how its components work in detail:
+### Basic headers and fetching settings
 
-* `systemd:` -> The main parent configuration block designed to manage and control all system services, background daemons, and automated boot tasks on Linux.
-* `units:` -> A nested list container inside systemd where you declare each individual background service or startup application you want to build or modify.
-* `name:` -> Specifies the exact identifier name for your service. A crucial rule in Linux is that this name must always end with a valid suffix, specifically `.service` (e.g., `alina-firewall.service`).
-* `enabled:` -> A boolean switch (`true` or `false`). When set to `true`, it tells the operating system to automatically activate and start this background program every single time the machine boots up.
+- `variant:` — Shows which operating system this file is for. Always
+  `flatcar` in this case.
+- `version:` — States which version of the file format is being used.
+- `ignition:` — Used to fetch extra settings from the internet or
+  another network location.
+- `config:` — Opens up more options inside the settings.
+- `merge:` — Adds another online configuration file into this one.
+- `replace:` — Deletes the old settings completely and loads a brand
+  new file from a URL instead.
+
+### Creating files and folders
+
+- `storage:` — The main place where files and drives get created.
+- `files:` — Starts a list of new files to create.
+- `path:` — The exact folder location where the file should go.
+- `mode:` — Sets file permissions, like read, write, or execute.
+- `overwrite:` — Overwrites or deletes an existing file at that path.
+- `contents:` — The actual text or data written inside the file.
+- `inline:` — Writes short text directly inside the config file
+  itself.
+- `directories:` — Creates a new empty folder.
+- `links:` — Creates a shortcut, called a symlink, pointing to
+  another file.
+
+### Setting up users and security
+
+- `passwd:` — The main block used to create and manage user accounts
+  on the system.
+- `users:` — The list of new accounts to create.
+- `name:` — Sets the login username. Flatcar's default admin user is
+  called `core`.
+- `ssh_authorized_keys:` — Where you paste your SSH public key, so you
+  can log in securely without needing a password.
 
 ---
 
-## What About the Extra Advanced Commands?
+## Automation with systemd
 
-You do not need to use these everyday commands for basic practice, but they are good to know for big cloud infrastructure setups:
+When you want a Flatcar server to run something automatically in the
+background right after it turns on, like a security script or a log
+scanner, you use the `systemd:` block.
 
-* **RAID & Disks (`disks:`, `partitions:`, `raid:`):** Used only when you connect multiple physical hard drives together to save data safely.
-* **LUKS Encryption (`luks:`, `key_file:`):** Used to put a high-security lock and password on your hard disk so hackers cannot read it.
-* **Directory Trees (`trees:`):** Used to copy a whole folder structure from your local computer into the server at once.
-* **Kernel Customization (`kernel_arguments:`):** Used to change the deep engine settings of the Linux Operating System at boot time.
+- `systemd:` — The main block that manages and controls all
+  background services and startup tasks on Linux.
+- `units:` — A list inside systemd where each background service is
+  defined, one at a time.
+- `name:` — The exact name of the service. In Linux, this name must
+  always end in `.service`, for example `alina-firewall.service`.
+- `enabled:` — Set to `true` or `false`. When set to `true`, the
+  service starts automatically every single time the machine boots
+  up.
+
+---
+
+## Advanced Commands
+
+These are not needed for everyday practice, but they matter a lot in
+real cloud infrastructure. Here is what each one actually does, and
+why it exists.
+
+### 1. `disks:`, `partitions:`, and `raid:` — splitting and joining hard disks
+
+When you set up a new server in the cloud, it often comes with more
+than one empty hard disk attached to it.
+
+- `disks:` tells the computer exactly which physical disk to work on,
+  for example `/dev/sda`.
+- `partitions:` splits that disk into smaller sections. For example,
+  you could create a separate 10GB partition just for a database.
+- `raid:` is used when you have three or four hard disks, and you
+  want your data to stay safe even if one disk fails or burns out.
+  RAID joins all those disks together into one, and keeps
+  automatically copying the data across them, so nothing is lost if
+  one disk dies.
+
+### 2. `luks:` and `key_file:` — locking and encrypting a hard disk
+
+This one matters a lot for cybersecurity. Imagine a hacker breaks
+into a data center and physically removes your server's hard disk. If
+that disk is not encrypted, they can just read everything on it
+directly.
+
+`luks:` is the standard Linux system that locks an entire hard disk
+using encryption. When the computer boots up, the disk stays locked
+until the correct `key_file:`, which works like a password, is
+provided. This key does not have to sit on the machine itself. Butane
+can even fetch it securely from the internet or from a separate secure
+server.
+
+### 3. `trees:` — copying a whole folder at once
+
+Earlier, under `storage:` and `files:`, each file has to be written
+out one at a time, with its own path and contents. But imagine your
+laptop already has a folder with a hundred security configuration
+files sitting in it. Writing each one out by hand would take forever.
+
+`trees:` solves this. It tells Butane to take an entire folder from
+your local computer and copy it directly into the Flatcar system,
+without needing to define every single file separately. What would
+take hours by hand takes seconds with this command.
+
+### 4. `kernel_arguments:` — giving direct settings to the OS engine
+
+The kernel is the core engine of a Linux operating system. The very
+first time a computer boots up, before any regular software even
+starts running, the hardware loads its settings through the kernel.
+
+`kernel_arguments:` lets you speak directly to the kernel the moment
+the system starts, saying things like "keep this hardware feature
+turned off" or "set security to a stricter level." These are deep,
+operating system level settings that cannot be controlled through
+normal software scripts.
 
 ---
 
 ## Important Definitions
 
-* **Flatcar Container Linux:** A tiny, highly secure operating system made only to run containers. Its main system is completely read-only.
-* **Ignition:** The machine-readable JSON file that Flatcar reads to configure itself on its very first boot.
-* **Transpiler:** The command-line tool that translates our easy Butane YAML file into the machine's Ignition JSON file.
+- **Flatcar Container Linux** — A small, highly secure operating
+  system built only to run containers. Its core system stays
+  completely read only.
+- **Ignition** — The machine readable JSON file that Flatcar actually
+  reads to configure itself the very first time it boots.
+- **Transpiler** — The command line tool that translates an easy
+  Butane YAML file into the machine's Ignition JSON file.
 
 ---
 
-> [!NOTE]
-> **Quick Hint:** You can find file modes (like `0644` for regular files or `0755` for scripts) in standard Linux cheat sheets. All local file paths are relative to the folder you specify with the `--files-dir` flag in your terminal.
+> **Quick hint:** File modes, like `0644` for regular files or `0755`
+> for scripts, can be found in any standard Linux cheat sheet. All
+> local file paths are relative to the folder set using the
+> `--files-dir` flag in the terminal.

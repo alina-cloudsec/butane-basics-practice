@@ -1,0 +1,14 @@
+{
+  "ignition": {
+    "version": "3.3.0"
+  },
+  "systemd": {
+    "units": [
+      {
+        "contents": "[Unit]\nDescription=Alina's practice firewall service\n\n[Service]\nExecStart=/usr/bin/echo \"Firewall service started\"\n\n[Install]\nWantedBy=multi-user.target",
+        "enabled": true,
+        "name": "alina-firewall.service"
+      }
+    ]
+  }
+}

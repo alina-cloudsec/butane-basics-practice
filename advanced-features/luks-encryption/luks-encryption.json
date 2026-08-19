@@ -1,0 +1,17 @@
+{
+  "ignition": {
+    "version": "3.3.0"
+  },
+  "storage": {
+    "luks": [
+      {
+        "device": "/dev/sdb1",
+        "keyFile": {
+          "compression": "",
+          "source": "data:,my-example-passphrase-not-real"
+        },
+        "name": "encrypted-data"
+      }
+    ]
+  }
+}

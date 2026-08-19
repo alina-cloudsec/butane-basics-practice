@@ -1,0 +1,12 @@
+{
+  "ignition": {
+    "config": {
+      "merge": [
+        {
+          "source": "https://example.com/base-config.json"
+        }
+      ]
+    },
+    "version": "3.3.0"
+  }
+}

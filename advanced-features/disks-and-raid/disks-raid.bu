@@ -1,0 +1,15 @@
+variant: flatcar
+version: 1.0.0
+storage:
+  disks:
+    - device: /dev/sdb
+      wipe_table: true
+      partitions:
+        - label: DATA
+          size_mib: 10240
+  raid:
+    - name: data-array
+      level: raid1
+      devices:
+        - /dev/sdb1
+        - /dev/sdc1

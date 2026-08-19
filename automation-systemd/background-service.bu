@@ -1,0 +1,15 @@
+variant: flatcar
+version: 1.0.0
+systemd:
+  units:
+    - name: alina-firewall.service
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Alina's practice firewall service
+
+        [Service]
+        ExecStart=/usr/bin/echo "Firewall service started"
+
+        [Install]
+        WantedBy=multi-user.target

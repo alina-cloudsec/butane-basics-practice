@@ -1,0 +1,9 @@
+variant: flatcar
+version: 1.0.0
+storage:
+  trees:
+    - local: security-configs
+      path: /etc/security-configs
+kernel_arguments:
+  should_exist:
+    - selinux=1

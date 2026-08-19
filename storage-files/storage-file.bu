@@ -1,0 +1,11 @@
+variant: flatcar
+version: 1.0.0
+storage:
+  files:
+    - path: /etc/alina-notes.txt
+      mode: 0644
+      overwrite: true
+      contents:
+        inline: |
+          This file was created by my Butane practice config.
+          It shows how the storage.files section works.

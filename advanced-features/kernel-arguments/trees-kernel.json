@@ -1,0 +1,10 @@
+{
+  "ignition": {
+    "version": "3.3.0"
+  },
+  "kernelArguments": {
+    "shouldExist": [
+      "selinux=1"
+    ]
+  }
+}

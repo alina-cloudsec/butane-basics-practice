@@ -1,0 +1,18 @@
+{
+  "ignition": {
+    "version": "3.3.0"
+  },
+  "storage": {
+    "files": [
+      {
+        "overwrite": true,
+        "path": "/etc/alina-notes.txt",
+        "contents": {
+          "compression": "",
+          "source": "data:,This%20file%20was%20created%20by%20my%20Butane%20practice%20config.%0AIt%20shows%20how%20the%20storage.files%20section%20works."
+        },
+        "mode": 420
+      }
+    ]
+  }
+}
